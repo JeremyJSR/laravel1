@@ -8,7 +8,14 @@
 </head>
 <body>
     <?php
-        echo $mensaje. '<br>'
+        echo $mensaje. '<br>';
+        if (isset($pers)) {
+            echo $pers->DNI;
+            echo $pers->nombre . ' ';
+            echo $pers->Tlno . ' ';
+            echo $pers->edad . ' ';
+        };
+
     ?>
     <a href="indice">Volver</a>
 </body>

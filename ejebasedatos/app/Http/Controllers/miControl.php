@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use App\Models\Persona;
 class miControl extends Controller
 {
     public function listar_a(Request $req){
@@ -82,6 +82,40 @@ class miControl extends Controller
         }
         catch (\ErroException $e){
             return view('error', ['mensaje'=>'La operacion no se ha podido realizar']);
+        }
+    }
+
+    public function validar(Request $req){
+        if ($req->get('vertodos')){
+            $pers = Persona::all();
+            $datos = [
+                'pers' => $pers
+            ];
+            return view('listado', $datos);
+        }
+        if ($req->get('buscar')){
+            $dn = $req->get('dni');
+            $pers = Persona::find($dn);
+
+            if (!$pers){
+                return view('error', ['mensaje' => 'Persona no encontrada']);
+            } else {
+                $datos = [
+                    'pers' => $pers,
+                    'mensaje' => 'persona encontrada'
+                ];
+                return view('exito', $datos);
+            }
+
+        }
+        if ($req->get('registrar')){
+
+        }
+        if ($req->get('borar')){
+
+        }
+        if ($req->get('modificar')){
+
         }
     }
 }

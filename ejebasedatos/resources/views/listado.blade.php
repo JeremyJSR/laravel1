@@ -8,13 +8,13 @@
 </head>
 <body>
     <?php
+             foreach ($pers as $pos => $p) {
+                 echo $p->DNI . ' - ' . $p->Nombre .' - ' . $p->Tfno . ' - ' . $p->edad . '<br>';
+             }
+            // dd($pers);
             // foreach ($pers as $pos => $p) {
             //     echo $p->DNI . ' - ' . $p->Nombre .' - ' . $p->Tfno . ' - ' . $p->edad . '<br>';
             // }
-            // dd($pers);
-            foreach ($pers as $pos => $p) {
-                echo $p->DNI . ' - ' . $p->Nombre .' - ' . $p->Tfno . ' - ' . $p->edad . '<br>';
-            }
         ?>
         <a href="indice">Volver</a>
 </body>
