@@ -8,19 +8,18 @@
 </head>
 <body>
     <?php
-    $usuario=session()->get('usuario');
+    session()->get('usuario');
     echo 'Bienvenid@: ' . $usuario[0]->nombre . '<br>';
 
     foreach ($usuario as $usu) {
-        # code...
 
     ?>
 
     <form action="actualizar" method="post">
         {{ csrf_field() }}
-        <input type="text" value="<?= $usu->email ?>" readonly>
-        <input type="text" value="<?= $usu->nombre ?>">
-        <input type="text" value="<?= $usu->edad ?>" >
+        <input type="text" value="<?= $usu->email ?>" readonly name="email">
+        <input type="text" value="<?= $usu->nombre ?>" name="nombre">
+        <input type="text" value="<?= $usu->edad ?>"  name="edad">
 
         <input type="submit" value="Modificar" name="modificar">
         <input type="submit" value="Eliminar" name="eliminar">
@@ -30,5 +29,6 @@
     }
 
     ?>
+    <a href="/">volver</a>
 </body>
 </html>

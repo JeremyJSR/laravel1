@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Usuario;
 
 class loginControlador extends Controller
 {
@@ -52,22 +53,31 @@ class loginControlador extends Controller
     }
     public function actualizarEliminarUsuario(Request $req){
         $email = $req->get('email');
+        $usu = Usuario::find($email);
+
         if($req->has('modificar')){
-            try {
-                DB::update('update usuarios set nombre = ?, edad = ? where email = ?',
-                [$req->get('nombre'),$req->get('edad'),$email ]);
-            }
-            catch(\Illuminate\Database\QueryException $e){
-                return view('error',['mensaje'=>'El registro no ha sido insertado'.$e->getCode()]);
+            if($usu){
+
+                try {
+                    $usu->nombre = $req->get('nombre');
+                    $usu->edad = $req->get('edad');
+                    $usu->save();
+                    // return view('');
+                }
+                catch(\Illuminate\Database\QueryException $e){
+                    return view('error',['mensaje'=>'El registro no ha sido insertado'.$e->getCode()]);
+                }
             }
         } else {
             try{
-                DB::delete('delete from usuarios where email=?',[$email]);
+                $usu->delete();
             }catch(\Illuminate\Database\QueryException $e){
                 return view('error',['mensaje'=>'El registro no ha sido eliminado'.$e->getCode()]);
             }
         }
-        $usuario=DB::select('select * from usuarios');
+        // $usuario=DB::select('select * from usuarios');
+
+        $usuario = Usuario::all();
         $datos = [
             'usuario'=> $usuario
         ];
