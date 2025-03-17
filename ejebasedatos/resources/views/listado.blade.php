@@ -8,8 +8,14 @@
 </head>
 <body>
     <?php
-             foreach ($pers as $pos => $p) {
-                 echo $p->DNI . ' - ' . $p->Nombre .' - ' . $p->Tfno . ' - ' . $p->edad . '<br>';
+        if (isset($pers)) {
+            foreach ($pers as $pos => $p) {
+                echo $p->DNI . ' - ' . $p->Nombre .' - ' . $p->Tfno . ' - ' . $p->edad . '<br>';
+            }
+        }
+        if (isset($coches))
+             foreach ($coches as $pos => $c) {
+                 echo $c->Matricula . ' - ' . $c->Modelo .' - ' . $c->Marca .'<br>';
              }
             // dd($pers);
             // foreach ($pers as $pos => $p) {

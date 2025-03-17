@@ -7,19 +7,16 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="validar" method="post">
+    <form action="validarC" method="post">
         {{ csrf_field()}}
-        DNI:  <input type="text" name="dni" ><br>
-        Nombre: <input type="text" name="nombre" id=""><br>
-        Tlno: <input type="text" name="tfno" id=""><br>
-        Edad: <input type="number" name="edad" value="0"><br>
+        Matricula:  <input type="text" name="matricula" ><br>
+        Marca: <input type="text" name="marca" id=""><br>
+        Modelo: <input type="text" name="modelo" id=""><br>
         <input type="submit" value="Buscar" name="buscar">
         <input type="submit" value="Registrar" name="registrar">
         <input type="submit" value="Borrar" name="borrar">
         <input type="submit" value="Modificar" name="modificar">
         <input type="submit" value="Vertodos" name="vertodos">
-
-
     </form>
 </body>
 </html>

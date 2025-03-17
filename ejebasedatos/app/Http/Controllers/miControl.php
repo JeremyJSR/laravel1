@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Persona;
+use App\Models\Coche;
 class miControl extends Controller
 {
     public function listar_a(Request $req){
@@ -109,12 +110,153 @@ class miControl extends Controller
 
         }
         if ($req->get('registrar')){
+            $dni = $req->get('dni');
+            $nom = $req->get('nombre');
+            $tfno = $req->get('tfno');
+            $edad = $req->get('edad');
+
+
+            $pe = new Persona();
+            $pe->DNI = $dni;
+            $pe->Nombre = $nom;
+            $pe->Tfno = $tfno;
+            $pe->edad = $edad;
+
+            try {
+                $pe->save();
+                return view('exito', ['mensaje' => 'Persona registrada con exito']);
+            }
+            catch (\Illuminate\Database\QueryException $ex){
+                return view('error', ['mensaje' => 'se ha encontrado error: ' . $ex->getCode()]); // Cambiado getMessage()
+            }
 
         }
-        if ($req->get('borar')){
+        if ($req->get('borrar')){
+            $dni = $req->get('dni');
+
+            $pe = Persona::find($dni);
+
+            if($pe){
+                // se puede presentar un error a la hora de borrar un registro y es si este es clave foranea de otro registro
+                // en este caso se  ara de la siguiente manera
+                try {
+                    $pe->delete();
+                    return view('exito', ['mensaje' => 'Registro borrado']);
+                }
+                catch (\Illuminate\Database\QueryException $ex){
+                    return view('error', ['mensaje' => 'se ha encontrao error: ' . $ex->getCode()]); // Cambiado getMessage()
+                }
+            } else {
+                return view('error', ['mensaje' => 'Registro no encontrado']);
+            }
+
 
         }
         if ($req->get('modificar')){
+            $dni = $req->get('dni');
+            $pe = Persona::find($dni);
+
+            if($pe){
+
+                $pe->Nombre = $req->get('nombre');
+                // $pe->Tfno = $req->get('tfno');
+                // $pe->edad = $req->get('edad');
+                try {
+                    $pe->save();
+                    return view('exito', ['mensaje' => 'Registro modificado']);
+                }
+                catch (\Illuminate\Database\QueryException $ex){
+                    return view('error', ['mensaje' => 'se ha encontrao error: ' . $ex->getCode()]); // Cambiado getMessage()
+                }
+            }else {
+                return view('error', ['mensaje' => 'Registro no encontrado']);
+            }
+
+        }
+    }
+
+    public function validarCoches(Request $req){
+        if ($req->get('vertodos')){
+            $coches = Coche::all();
+            $datos = [
+                'coches' => $coches
+            ];
+            return view('listado', $datos);
+        }
+        if($req->get('buscar')){
+            $mat = $req->get('matricula');
+            $coch = Coche::find($mat);
+
+            if($coch){
+                $datos = [
+                    'coch' => $coch,
+                    'mensaje' => 'Coche encontrado'
+                ];
+                return view('exito', $datos);
+            }else {
+                return view('error', ['mensaje' => 'Persona no encontrada']);
+            }
+        }
+        if($req->get('registrar')){
+            $mat = $req->get('matricula');
+            $mar = $req->get('marca');
+            $mod = $req->get('modelo');
+
+
+
+            $co = new Coche();
+            $co->Matricula = $mat;
+            $co->Marca = $mar;
+            $co->Modelo = $mod;
+
+            try {
+                $co->save();
+                return view('exito', ['mensaje' => 'Coche registrado con exito']);
+            }
+            catch (\Illuminate\Database\QueryException $ex){
+                return view('error', ['mensaje' => 'se ha encontrado error: ' . $ex->getCode()]); // Cambiado getMessage()
+            }
+        }
+        if ($req->get('borrar')){
+            $mat = $req->get('matricula');
+
+            $co = Coche::find($mat);
+
+            if($co){
+                // se puede presentar un error a la hora de borrar un registro y es si este es clave foranea de otro registro
+                // en este caso se  ara de la siguiente manera
+                try {
+                    $co->delete();
+                    return view('exito', ['mensaje' => 'Registro borrado']);
+                }
+                catch (\Illuminate\Database\QueryException $ex){
+                    return view('error', ['mensaje' => 'se ha encontrao error: ' . $ex->getCode()]); // Cambiado getMessage()
+                }
+            } else {
+                return view('error', ['mensaje' => 'Registro no encontrado']);
+            }
+
+
+        }
+        if ($req->get('modificar')){
+            $mat = $req->get('matricula');
+            $co = Coche::find($mat);
+
+            if($co){
+
+                $co->Modelo = $req->get('modelo');
+                $co->Marca = $req->get('marca');
+                // $co->edad = $req->get('edad');
+                try {
+                    $co->save();
+                    return view('exito', ['mensaje' => 'Registro modificado']);
+                }
+                catch (\Illuminate\Database\QueryException $ex){
+                    return view('error', ['mensaje' => 'se ha encontrao error: ' . $ex->getCode()]); // Cambiado getMessage()
+                }
+            }else {
+                return view('error', ['mensaje' => 'Registro no encontrado']);
+            }
 
         }
     }

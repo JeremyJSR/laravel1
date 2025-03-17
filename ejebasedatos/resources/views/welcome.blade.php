@@ -27,6 +27,7 @@
         <a href="insertar">Prueba de la libreria DB - Insertar</a><br>
         <a href="modificar">Prueba de la libreria DB - Modifiacar</a><br>
         <a href="eliminar">Prueba de la libreria DB - Eliminar</a><br>
-        <a href="eloquent">Prueba con eloquent</a>
+        <a href="eloquent">Prueba con eloquent</a><br>
+        <a href="eloquent2">Prueba con eloquent2</a><br>
     </body>
 </html>

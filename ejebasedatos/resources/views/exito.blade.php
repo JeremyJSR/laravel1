@@ -15,7 +15,11 @@
             echo $pers->Tlno . ' ';
             echo $pers->edad . ' ';
         };
-
+        if (isset($coch)) {
+            echo $coch->Matricula . ' --- ' ;
+            echo $coch->Marca . ' --- ';
+            echo $coch->Modelo . ' --- ';
+        };
     ?>
     <a href="indice">Volver</a>
 </body>

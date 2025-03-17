@@ -32,3 +32,9 @@ Route::get('eloquent', function(){
     return view('formularioPersona');
 });
 Route::post('validar', [miControl::class, 'validar']);
+
+
+Route::get('eloquent2', function(){
+    return view('formularioCoches');
+});
+Route::post('validarC', [miControl::class, 'validarCoches']);
