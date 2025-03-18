@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use App\Models\Usuario;
 
 class loginControlador extends Controller
@@ -12,15 +13,13 @@ class loginControlador extends Controller
         $acceso = $req->get('acceder');
         $registrar = $req->get('registrar');
 
-        $usu = $req->get('usuario');
-        $pass = $req->get('pass');
-
         if($acceso){
-            $consulta = 'select email, pass from usuarios where usuarios.email = ? AND usuarios.pass = ?';
+            $email = $req->get('email');
+            $pass = $req->get('pass');
+            $usuario = Usuario::where('email', $email)->first();
+            dd($usuario);
 
-            if($usuario = DB::select($consulta, [$usu, $pass])){
-                $usuario = DB::select('select * from usuarios');
-                session()->put('usuario', $usuario);
+            if($usuario && Hash::check($pass, $usuario->pass)){
                 $datos = [
                     'usuario' => $usuario
                 ];
@@ -36,9 +35,23 @@ class loginControlador extends Controller
     }
     public function insertar(Request $req){
         if($req->has('guardar')){
+            $ema = $req->get('email');
+            $nom = $req->get('nombre');
+            $edad = $req->get('edad');
+            // $pass = $req->get('pass');
+            $passEncrip = Hash::make($req->get('pass'));
+
+
+
+            $usu = new Usuario;
+            $usu->email = $ema;
+            $usu->nombre = $nom;
+            $usu->edad = $edad;
+            $usu->pass = $passEncrip;
             try {
-                DB::insert('insert into usuarios (email, nombre, edad, pass) values (?, ?, ?, ?)',
-                [$req->get('email'), $req->get('nombre'), $req->get('edad'), $req->get('pass')]);
+                // DB::insert('insert into usuarios (email, nombre, edad, pass) values (?, ?, ?, ?)',
+                // [$req->get('email'), $req->get('nombre'), $req->get('edad'), $passEncrip]);
+                $usu->save();
                 return view('login');
             }
             catch (\Illuminate\Database\QueryException $e){

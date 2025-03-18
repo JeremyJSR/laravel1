@@ -1,8 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\loginControlador;
-
+use App\Http\Controllers\miControlador;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,13 +14,6 @@ use App\Http\Controllers\loginControlador;
 */
 
 Route::get('/', function () {
-    return view('login');
+    return view('welcome');
 });
-Route::post('accion', [loginControlador::class, 'accion']);
-Route::post('registro', [loginControlador::class, 'insertar']);
-Route::post('actualizar', [loginControlador::class, 'actualizarEliminarUsuario']);
-
-// ruta nueva de prueba para el middleware
-Route::get('anadir', function (){
-    return view('registrar');
-})->middleware('midSesion', 'midAdministrador');
+Route::post('enviar', [miControlador::class,'enviarCorreo']);

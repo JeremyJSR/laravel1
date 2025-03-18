@@ -21,14 +21,14 @@
         </style>
     </head>
     <body class="antialiased">
-        {{-- @if (isset($mensaje))
+        @if (isset($mensaje))
             <h2 style="color:red;">{{ $mensaje }}</h2>
-        @endif --}}
+        @endif
 
         <form action="accion" method="post">
             {{ csrf_field() }}
             <label for="">Usuario: </label>
-            <input type="text" name="usuario"><br>
+            <input type="email" name="email"><br>
             <label for="">Contraseña: </label>
             <input type="password" name="pass"><br>
             <input type="submit" value="Aceptar" name="acceder">
