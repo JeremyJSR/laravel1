@@ -9,7 +9,11 @@
     </head>
     <body class="antialiased">
         <h1>Accede o Registrate</h1>
-
+        <?php
+            if(isset($mensaje)){
+                echo $mensaje . "<br><br>";
+            }
+        ?>
         <form action="validar" method="post">
             {{ csrf_field() }}
             <label for="">Usuario</label>

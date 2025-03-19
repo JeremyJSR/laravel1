@@ -18,14 +18,29 @@ class miControlador extends Controller
             ];
             return view('vertodo', $datos);
         }
-
         if($accion == 'Registrar'){
             return view('registrar');
+        }
+        if($accion == 'Acceder'){
+            $ema = $req->get('correo');
+            $pass = $req->get('pass');
+            $pers = Persona::where('email', $ema)->first();
+            if($pers->email == $ema && $pers->pass == $pass){
+                $pers = Persona::all();
+                // session()->get('nombre')
+                $datos = [
+                    'personas' => $pers,
+                    'mensaje' => 'yoxd'
+                ];
+                return view('acceso', $datos);
+            }else{
+                return view('validar', ['mensaje' => 'Error Vuelve a intentarlo']);
+            }
+
         }
     }
 
     public function agregar(Request $req){
-
         if($req->get('registrar')){
             $nom = $req->get('nombre');
             $ema = $req->get('email');
