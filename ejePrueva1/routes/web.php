@@ -17,5 +17,9 @@ Route::get('/', function () {
     return view('validar');
 });
 Route::post('validar', [miControlador::class,'validacion']);
+Route::get('validar', function () {
+    return view('vertodos');
+})->middleware('midSesion');
+
 
 Route::post('registrar', [miControlador::class,'agregar']);

@@ -24,13 +24,13 @@ class miControlador extends Controller
         if($accion == 'Acceder'){
             $ema = $req->get('correo');
             $pass = $req->get('pass');
-            $pers = Persona::where('email', $ema)->first();
-            if($pers->email == $ema && $pers->pass == $pass){
-                $pers = Persona::all();
-                // session()->get('nombre')
+            $pers = Persona::where('email', $ema)
+            ->where('password', $pass)->first();
+            if($pers){
+                $listado_personas = Persona::all();
+                session()->put('persona', $pers);
                 $datos = [
-                    'personas' => $pers,
-                    'mensaje' => 'yoxd'
+                    'personas' => $listado_personas
                 ];
                 return view('acceso', $datos);
             }else{

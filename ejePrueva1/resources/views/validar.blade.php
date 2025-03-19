@@ -10,6 +10,7 @@
     <body class="antialiased">
         <h1>Accede o Registrate</h1>
         <?php
+            session()->forget('persona');
             if(isset($mensaje)){
                 echo $mensaje . "<br><br>";
             }
